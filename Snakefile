@@ -1,3 +1,3 @@
 #configfile: "environment.yaml"
 
-include : "DArT_realignment_pipeline.smk"
+include : "SimpleSnek_pipeline.smk"
