@@ -3,11 +3,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Snakemake](https://img.shields.io/badge/snakemake-≥7.0-brightgreen.svg)](https://snakemake.github.io)
 
-This repository contains a Snakemake workflow for conducting variant analysis on tetraploid Alfalfa. The pipeline takes raw, single-end FASTQ files and performs read trimming, mapping, GATK-based joint-calling, and final filtering to produce high-quality SNP and INDEL variant sets.
+This repository contains a Snakemake workflow for conducting variant analysis from DArT fastq. The pipeline takes raw, single-end FASTQ files and performs read trimming, mapping, GATK-based joint-calling, and final filtering to produce high-quality SNP and INDEL variant sets.
 
 This workflow is specifically designed to:
 * Process **single-end** sequencing data.
-* Handle **tetraploid** (`-ploidy 4`) variant calling with GATK.
+* Handle **polyploid** _or_ **diploid** (`-ploidy 4`) variant calling with GATK.
 * Perform **joint-calling** across all samples found in the input directory.
 * Use Trimmomatic, BWA, Picard, Samtools, GATK4, and BCFtools.
 
