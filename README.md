@@ -90,6 +90,8 @@ You must organize your project files as shown below. The `Snakefile` uses relati
 /your\_main\_project\_directory/
 ├── analysis/              \<-- Your current working directory
 │   ├── Snakefile          \<-- This snakemake file
+|   ├── SimpleSnek.smk          \<-- This snakemake file
+|   ├── environment          \<-- This environment file
 │   └── ... (final output VCFs will be created here)
 │
 ├── bin/                   \<-- Directory for executable software
@@ -111,8 +113,9 @@ You must organize your project files as shown below. The `Snakefile` uses relati
 # The location of your input files is configured in the Snakefile
 
 # For example: /workdir/ams866/Alfalfa/validation\_plates/FASTQ/
-
 ````
+
+_Note: you may have to manually create the trim, mapped, sorted, marked, and vcf folders manually before running the pipeline_
 
 **2. Software Installation:**
 Ensure the following software is installed and that the paths in the `Snakefile` point to the correct locations.
