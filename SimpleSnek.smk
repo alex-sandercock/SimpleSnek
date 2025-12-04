@@ -65,7 +65,7 @@ rule samtools_sort_index:
         "samtools sort {input} -o {output} && samtools index {output}"
 
 # Define a rule for removing PCR duplicates
-rule_mark_duplicates:
+rule mark_duplicates:
     input:
         "../../sorted/{sample}.sorted.bam"
     output:
