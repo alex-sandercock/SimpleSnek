@@ -1,3 +1,3 @@
 #configfile: "environment.yaml"
 
-include : "SimpleSnek_pipeline.smk"
+include : "SimpleSnek.smk"
