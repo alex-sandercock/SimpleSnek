@@ -17,6 +17,23 @@ rule all:
         "final_combined_filtered_snps.vcf.gz",
         "final_combined_filtered_indels.vcf.gz"
 
+# Additional target rules for partial pipeline execution
+rule map_all:
+    input:
+        expand("../../mapped/{sample}.bam", sample=samples)
+
+rule sort_all:
+    input:
+        expand("../../sorted/{sample}.sorted.bam", sample=samples)
+
+rule mark_all:
+    input:
+        expand("../../marked/{sample}.marked.bam", sample=samples)
+
+rule call_all:
+    input:
+        expand("../../vcf/{sample}.g.vcf", sample=samples)
+
 # Rule to index the genome
 #rule index_genome:
 #    input:
