@@ -77,7 +77,7 @@ rule mark_duplicates:
         REMOVE_DUPLICATES=true \
         CREATE_INDEX=true \
         O={output} \
-        M={sample}_marked_dup_metrics.txt
+        M={wildcards.sample}_marked_dup_metrics.txt
         """
 
 # Define a rule for SNP calling with GATK
@@ -96,12 +96,12 @@ rule gatk_snp_calling:
 #Define a rule for making a list of GVCF file names
 rule gvcf_list:
     input:
-        gvcfs_path = "../../vcf"
+        gvcfs = expand("../../vcf/{sample}.g.vcf", sample=samples)
     output:
         "../../vcf/sample_files.list"
     shell:
         """
-        find {input.gvcfs_path} -type f -name "*g.vcf" > {output}
+        echo {input.gvcfs} | tr ' ' '\\n' > {output}
         """
 
 #Define a rule for combining GVCF files for all samples
