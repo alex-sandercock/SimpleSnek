@@ -158,14 +158,14 @@ Navigate to the directory containing your `Snakefile` to execute the commands be
 This will check for errors and show you which jobs will be run without actually executing them.
 
 ```bash
-snakemake -n
+snakemake all -n
 ```
 
 **2. Full Pipeline Execution:**
 Run the entire pipeline. Snakemake will use the number of cores you specify.
 
 ```bash
-snakemake --cores <N>
+snakemake all --cores <N>
 ```
 
 > Replace `<N>` with the total number of CPU cores you want to allocate to the job.
@@ -174,7 +174,7 @@ snakemake --cores <N>
 To generate an image of the workflow graph (requires `graphviz`):
 
 ```bash
-snakemake --dag | dot -Tpng > workflow_dag.png
+snakemake all --dag | dot -Tpng > workflow_dag.png
 ```
 
 -----
