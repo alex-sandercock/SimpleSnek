@@ -161,6 +161,8 @@ This will check for errors and show you which jobs will be run without actually 
 snakemake all -n
 ```
 
+> **Note:** You must explicitly specify the `all` target. Running just `snakemake --cores <N>` without `all` may not work as expected.
+
 **2. Full Pipeline Execution:**
 Run the entire pipeline. Snakemake will use the number of cores you specify.
 
@@ -176,7 +178,13 @@ To generate an image of the workflow graph (requires `graphviz`):
 ```bash
 snakemake all --dag | dot -Tpng > workflow_dag.png
 ```
-
+**4. Run Partial Pipeline:**
+To run only up to a specific step:
+```bash
+snakemake map_all --cores <N>   # Stop after mapping
+snakemake mark_all --cores <N>  # Stop after duplicate marking
+snakemake call_all --cores <N>  # Stop after GVCF generation
+```
 -----
 
 ## Output Files
