@@ -57,7 +57,8 @@ rule trim_fastq:
     output:
         "../../trim/{sample}.trim.fastq.gz"
     shell:
-        "java -jar ../../bin/Trimmomatic-0.39/trimmomatic-0.39.jar SE -phred33 {input.R1} {output} ILLUMINACLIP:TruSeq3-SE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:30 MINLEN:36"
+        #"java -jar ../../bin/Trimmomatic-0.39/trimmomatic-0.39.jar SE -phred33 {input.R1} {output} ILLUMINACLIP:TruSeq3-SE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:30 MINLEN:36"
+        "cutadapt -j 8 -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC -a AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTA -O 5 -q 20 -m 30 -o {output} {input.R1}"
 
 # Define a rule for mapping with BWA
 rule bwa_mapping:
@@ -82,25 +83,28 @@ rule samtools_sort_index:
         "samtools sort {input} -o {output} && samtools index {output}"
 
 # Define a rule for removing PCR duplicates
-rule mark_duplicates:
-    input:
-        "../../sorted/{sample}.sorted.bam"
-    output:
-        "../../marked/{sample}.marked.bam"
-    shell:
-        """
-        java -Xmx20g -jar ../../bin/picard.jar MarkDuplicates \
-        I={input} \
-        REMOVE_DUPLICATES=true \
-        CREATE_INDEX=true \
-        O={output} \
-        M={wildcards.sample}_marked_dup_metrics.txt
-        """
+#NOTE: we comment out this rule when using targeted DArTag sequencing. If using WGS or GBS from a non-targeted platform, set this to true
+#rule mark_duplicates:
+#    input:
+#        "../../sorted/{sample}.sorted.bam"
+#    output:
+#        "../../marked/{sample}.marked.bam"
+#    shell:
+#        """
+#        java -Xmx20g -jar ../../bin/picard.jar MarkDuplicates \
+#        I={input} \
+#        REMOVE_DUPLICATES=true \
+#        CREATE_INDEX=true \
+#        O={output} \
+#        M={wildcards.sample}_marked_dup_metrics.txt
+#        """
 
 # Define a rule for SNP calling with GATK
+# If wanting to remove duplicates, uncomment the above rule, and change the input here to the /marked folder bams
 rule gatk_snp_calling:
     input:
-        bam = "../../marked/{sample}.marked.bam"
+        #bam = "../../marked/{sample}.marked.bam"
+        bam = "../../sorted/{sample}.sorted.bam"
     params:
         java_option = "-Xmx20g",
         reference = "../../reference_genome/final_genome.fa",
